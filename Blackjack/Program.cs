@@ -10,10 +10,8 @@ namespace Blackjack
     {
         static void Main(string[] args)
         {
-            Deck deck = new Deck();
-            deck.makeDeck();
-            deck.Shuffle();
-            for (int i = 0; i < 52; i++) deck.PrintCard(i);
+            Game game = new Game();
+            game.Bet();
         }
     }
 }
