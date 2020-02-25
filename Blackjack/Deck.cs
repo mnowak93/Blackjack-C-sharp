@@ -119,5 +119,10 @@ namespace Blackjack
         {
             foreach (Card card in cardDeck) card.CardNotUsed();
         }
+
+        public Card GetCard(int i)
+        {
+            return cardDeck[i];
+        }
     }
 }
