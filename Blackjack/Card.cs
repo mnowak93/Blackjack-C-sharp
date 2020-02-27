@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Blackjack
 {
     public class Card
     {
-        public string suit = "";
-        public string rank = "";
-        public int value = 0;
-        public bool used = false;
+        private string suit = "";
+        private string rank = "";
+        private int value = 0;
 
         //Constructor
         public Card(string argSuit, string argRank)
@@ -20,22 +15,14 @@ namespace Blackjack
             rank = argRank;
         }
 
-        //Function changing used to true value (card is used)
-        public void CardUsed()
+        public string GetRank()
         {
-            used = true;
+            return rank;
         }
 
-        //Function changing used to false value (card is in deck)
-        public void CardNotUsed()
+        public int GetValue()
         {
-            used = false;
-        }
-
-        //Adding value to the card
-        public void SetValue(int argValue)
-        {
-            value = argValue;
+            return value;
         }
 
         //Printing card
@@ -43,5 +30,11 @@ namespace Blackjack
         {
             Console.WriteLine("Card: {0} of {1}", rank, suit);
         }
+
+        //Adding value to the card
+        public void SetValue(int argValue)
+        {
+            value = argValue;
+        }            
     }
 }

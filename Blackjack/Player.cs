@@ -1,23 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Blackjack
 {
     class Player
     {
-        public Dictionary<string, int> record = new Dictionary<string, int>(){
+        private Dictionary<string, int> record = new Dictionary<string, int>(){
                                                 {"Win",0},
                                                 {"Loss",0},
                                                 {"Bust",0}
                                             };
-        public List<Card> playerHand = new List<Card>();
-        public int playerHandValue = 0;
-        public int currentBet = 0;
-        public int bank = 100;
-        public string name = "";
+        private List<Card> playerHand = new List<Card>();
+        private int playerHandValue = 0;
+        private int currentBet = 0;
+        private int bank = 100;
+        private string name = "";
+
+        //Adding card do player hand
+        public void AddCard(Card crd)
+        {
+            playerHand.Add(crd);
+        }
+
+        //adding or subtracting current Bet to player bank 
+        public void BankCorrection(char ch)
+        {
+            if (ch == '-') bank -= currentBet;
+            else bank += Convert.ToInt32(currentBet * 1.5);
+        }
+
+        //cheching the bank if ammount is greater than 0 returning true, if not return false
+        public bool CheckBank()
+        {
+            if (bank > 0) return true;
+            else return false;
+        }
+
+        public void CountHand()
+        {
+            playerHandValue = 0;
+            foreach (Card crd in playerHand)
+            {
+                playerHandValue += crd.GetValue();
+            }
+        }
+
+        public void CorrectRecord(string str)
+        {
+            record[str] += 1;
+        }
 
         //Creating player
         public void CreatePlayer()
@@ -28,9 +59,60 @@ namespace Blackjack
 
             SetBank();
             PrintRecord();
-            Console.WriteLine("(press enter)");
-            Console.ReadLine();
+        }
+
+        public int GetBank()
+        {
+            return bank;
+        }
+
+        public int PlayerHandValue()
+        {
+            return playerHandValue;
+        }
+
+        public void PrintBank()
+        {
+            Console.WriteLine("Bank: {0}", bank);
+        }
+
+        public void PrintDetails()
+        {
+            PrintName();
+            PrintHand();
+        }
+
+        //printing player hand
+        public void PrintHand()
+        {
+            Console.WriteLine("Player: {0}", name);
+            foreach (Card crd in playerHand)
+            {
+                crd.PrintCard();
+            }
+            CountHand();
+            Console.WriteLine("Total: {0}", playerHandValue);
+        }
+
+        public void PrintName()
+        {
+            Console.WriteLine("{0}: ", name);
+        }
+
+        //Printing player record
+        public void PrintRecord()
+        {
             Console.Clear();
+            Console.WriteLine("Player: {0}", name);
+            Console.WriteLine("Bank: {0}", bank);
+            Console.WriteLine("Wins: {0}, Losses: {1}, Busts: {2}", record["Win"], record["Loss"], record["Bust"]);
+        }
+
+        //reseting hand of player in preparation for another round
+        public void ResetHand()
+        {
+            playerHand.Clear();
+            playerHandValue = 0;
         }
 
         //Player setting bank ammount
@@ -59,95 +141,15 @@ namespace Blackjack
             }
         }
 
-        public int GetBank()
+        public void SetBet(int newBet)
         {
-            return bank;
+            currentBet = newBet;
         }
 
         //Setting a name for player
         public void SetName(string newName)
         {
             name = newName;
-        }
-
-        //Printing player record
-        public void PrintRecord()
-        {
-            Console.Clear();
-            Console.WriteLine("Player: {0}", name);
-            Console.WriteLine("Bank: {0}", bank);
-            Console.WriteLine("Wins: {0}, Losses: {1}, Busts: {2}", record["Win"], record["Loss"], record["Bust"]);
-        }
-
-        //adding card do player hand
-        public void addCard(Card crd)
-        {
-            playerHand.Add(crd);
-        }
-
-        //printing player hand
-        public void PrintHand()
-        {
-            Console.WriteLine("Player: {0}", name);
-            foreach (Card crd in playerHand)
-            {
-                crd.PrintCard();
-            }
-            Console.WriteLine("Total: {0}", playerHandValue);
-        }
-
-        public void PrintBank()
-        {
-            Console.WriteLine("Bank: {0}", bank);
-        }
-
-        //printing value of current bet
-        public void PrintBet()
-        {
-            Console.WriteLine("Current bet: {0}", currentBet);
-        }
-    
-        //Setting a new bet    
-        public void SetBet(int newBet)
-        {
-            currentBet = newBet;
-        }
-
-        //Getting a bet value;
-        public int GetBet()
-        {
-            return currentBet;
-        }
-
-        //counting sum of player hand
-        public void CountHand()
-        {
-            playerHandValue = 0;
-            foreach (Card crd in playerHand)
-            {
-                playerHandValue += crd.value;
-            }
-        }
-
-        //reseting hand of player in preparation for another round
-        public void ResetHand()
-        {
-            playerHand.Clear();
-            playerHandValue = 0;
-        }
-
-        //cheching the bank if ammount is greater than 0 returning true, if not return false
-        public bool CheckBank()
-        {
-            if (bank > 0) return true;
-            else return false;
-        }
-
-        //adding or subtracting current Bet to player bank 
-        public void BankCorrection(char ch)
-        {
-            if (ch == '-') bank -= currentBet;
-            else bank += Convert.ToInt32(currentBet * 1.5);
         }
     }
 }

@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Blackjack
 {
     class Deck
     {
-        public string[] arrSuits = { "Hearts", "Diamonds", "Clubs", "Spades" };
-        public string[] arrRanks = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
+        private string[] arrSuits = { "Hearts", "Diamonds", "Clubs", "Spades" };
+        private string[] arrRanks = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
         private static Random rng = new Random();
 
-        public List<Card> cardDeck = new List<Card>();
+        private List<Card> cardDeck = new List<Card>();
 
         //Creating deck
-        public void makeDeck()
+        public Deck()
         {   
             //Making new instances of Card object in the list
             foreach (string strSuit in arrSuits)
@@ -29,11 +26,11 @@ namespace Blackjack
         }
 
         //Adding values to cards
-        public void AddValue()
+        private void AddValue()
         {
             foreach (Card tempCard in cardDeck)
             {
-                switch (tempCard.rank)
+                switch (tempCard.GetRank())
                 {
                     case "A":
                         tempCard.SetValue(11);
@@ -81,6 +78,12 @@ namespace Blackjack
             }
         }
 
+        //Returning card from deck o i position
+        public Card GetCard(int i)
+        {
+            return cardDeck[i];
+        }
+
         //Shuffling the deck
         public void Shuffle()
         {
@@ -93,36 +96,6 @@ namespace Blackjack
                 cardDeck[k] = cardDeck[n];
                 cardDeck[n] = value;
             }
-        }
-
-        //Printing card from deck
-        public void PrintCard(int i)
-        {
-            cardDeck[i].PrintCard();
-            Console.WriteLine(cardDeck[i].value);
-        }
-
-        //Geting value of card from deck
-        public int GetValueFromDeck(int i)
-        {
-            return cardDeck[i].value;
-        }
-
-        //Removing card from deck
-        public void RemoveCard(int i)
-        {
-            cardDeck[i].CardUsed();
-        }
-
-        //Adding all cards back to deck
-        public void ResetDeck()
-        {
-            foreach (Card card in cardDeck) card.CardNotUsed();
-        }
-
-        public Card GetCard(int i)
-        {
-            return cardDeck[i];
-        }
+        }        
     }
 }
